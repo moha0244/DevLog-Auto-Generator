@@ -30,6 +30,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   commits: Commit[] = [];
   generatedContent: string | null = null;
   selectedPlatform: string = 'LinkedIn';
+  selectedCommits: Commit[] = [];
   githubInfo: { username: string; repo: string; range: string; author?: string } | null = null;
   isGeneratingPost: boolean = false;
   GithubIcon = Github;
@@ -57,6 +58,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
         // Fermer le modal après succès
         this.loadingService.hideLoading();
         
+        this.cdr.detectChanges();
+      }
+
+      if (event.type === AppEventType.SELECTED_COMMITS_CHANGED) {
+        this.selectedCommits = event.data;
+      }
+
+      if (event.type === AppEventType.PLATFORM_CHANGED && event.data?.platform) {
+        this.selectedPlatform = event.data.platform;
         this.cdr.detectChanges();
       }
 

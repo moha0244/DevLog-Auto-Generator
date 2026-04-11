@@ -1,4 +1,12 @@
-import { Component, Input, OnChanges, SimpleChanges, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  OnInit,
+  OnDestroy,
+  ChangeDetectorRef
+} from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { CommunicationService } from '../../services/communication.service';
 import { AppEventType } from '../../models/github-api.model';
@@ -12,7 +20,8 @@ import {
   ThumbsUp,
   MessageCircle,
   Repeat2,
-  Check
+  Check,
+  Twitter
 } from 'lucide-angular';
 
 @Component({
@@ -25,26 +34,9 @@ import {
 export class SocialPreviewComponent implements OnChanges, OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
-  constructor(private communicationService: CommunicationService, private cdr: ChangeDetectorRef) {}
-
-  ngOnInit(): void {
-    this.communicationService.events$.pipe(takeUntil(this.destroy$)).subscribe((event) => {
-      if (!event) return;
-
-      // Écouter les événements de génération de post
-      if (event.type === AppEventType.POST_GENERATED && event.data?.content) {
-        this.previewContent = event.data.content;
-        this.cdr.detectChanges();
-      }
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
   @Input() content: string | null = null;
   @Input() platformName: string = 'LinkedIn';
+  @Input() platform: string = 'LinkedIn';
   @Input() emptyMessage: string = 'Your generated post will appear here';
   @Input() generatedTime: string = '';
   @Input() isGenerated: boolean = false;
@@ -55,6 +47,7 @@ export class SocialPreviewComponent implements OnChanges, OnInit, OnDestroy {
   readonly FileTextIcon = FileText;
   readonly CopyIcon = Copy;
   readonly LinkedinIcon = Linkedin;
+  readonly TwitterIcon = Twitter;
   readonly ThumbsUpIcon = ThumbsUp;
   readonly MessageCircleIcon = MessageCircle;
   readonly Repeat2Icon = Repeat2;
@@ -63,10 +56,37 @@ export class SocialPreviewComponent implements OnChanges, OnInit, OnDestroy {
   isEditing = false;
   editedContent = '';
   previewContent = '';
+  originalAiContent = '';
+
+  constructor(
+    private communicationService: CommunicationService,
+    private cdr: ChangeDetectorRef
+  ) {}
+
+  ngOnInit(): void {
+    this.communicationService.events$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((event) => {
+        if (!event) return;
+
+        if (event.type === AppEventType.POST_GENERATED && event.data?.content) {
+          const nextContent = event.data.content;
+          this.originalAiContent = nextContent;
+          this.previewContent = nextContent;
+
+          if (!this.isEditing) {
+            this.editedContent = nextContent;
+          }
+
+          this.cdr.detectChanges();
+        }
+      });
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['content']) {
       const nextValue = this.content ?? '';
+      this.originalAiContent = nextValue;
       this.previewContent = nextValue;
 
       if (!this.isEditing) {
@@ -75,9 +95,33 @@ export class SocialPreviewComponent implements OnChanges, OnInit, OnDestroy {
     }
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  isXPlatform(): boolean {
+    const p = (this.platform || this.platformName || '').toLowerCase();
+    return p === 'x' || p === 'twitter';
+  }
+
+  getPlatformIcon() {
+    return this.isXPlatform() ? this.TwitterIcon : this.LinkedinIcon;
+  }
+
+  getPlatformName(): string {
+    return this.isXPlatform() ? 'X' : 'LinkedIn';
+  }
+
+  getPlatformClass(): string {
+    return this.isXPlatform() ? 'x-platform' : 'linkedin-platform';
+  }
+
   toggleEditMode(): void {
     if (this.isEditing) {
       this.isEditing = false;
+      this.previewContent = this.originalAiContent;
+      this.editedContent = this.originalAiContent;
       return;
     }
 
@@ -91,7 +135,9 @@ export class SocialPreviewComponent implements OnChanges, OnInit, OnDestroy {
   }
 
   async copyContent(): Promise<void> {
-    const textToCopy = this.isEditing ? this.editedContent : this.previewContent;
+    const textToCopy = this.isEditing
+      ? this.editedContent
+      : (this.previewContent || this.originalAiContent);
 
     if (!textToCopy?.trim()) return;
 
@@ -125,6 +171,11 @@ export class SocialPreviewComponent implements OnChanges, OnInit, OnDestroy {
 
   getAuthorName(): string {
     return this.githubUsername?.trim() || 'janedoe';
+  }
+
+  getAuthorHandle(): string {
+    const base = this.githubUsername?.trim() || this.githubAuthor?.trim() || 'janedoe';
+    return base.toLowerCase().replace(/\s+/g, '');
   }
 
   getAuthorHeadline(): string {

@@ -1,4 +1,4 @@
-// dashboard.component.scss (inchangé)
+// dashboard.component.scss 
 * {
   margin: 0;
   padding: 0;
@@ -15,6 +15,9 @@
 .topbar {
   background: #ffffff;
   border-bottom: 1px solid #d0d7de;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .topbar-content {
@@ -200,7 +203,7 @@ button:hover {
 
 // Commit Timeline - scrollable
 .timeline-card {
-  max-height: 600px;
+  max-height: 1000px;
   overflow-y: auto;
 }
 

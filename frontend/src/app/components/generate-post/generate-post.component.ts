@@ -1,11 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { LucideAngularModule, Sparkles } from 'lucide-angular';
 
 import { CommunicationService } from '../../services/communication.service';
-import { Commit, PostGenerationRequest } from '../../models/github-api.model';
+import { Commit, PostGenerationRequest, AppEventType } from '../../models/github-api.model';
 
 @Component({
   selector: 'app-generate-post',
@@ -15,29 +15,44 @@ import { Commit, PostGenerationRequest } from '../../models/github-api.model';
   styleUrls: ['./generate-post.component.scss'],
 })
 export class GeneratePostComponent implements OnInit, OnDestroy {
+  private _platform = 'LinkedIn';
+
+  get platform(): string {
+    return this._platform;
+  }
+
+  set platform(value: string) {
+    this._platform = value;
+   
+  }
+
   tone = 'Professional';
-  platform = 'LinkedIn';
   selectedCommits: Commit[] = [];
   githubInfo: { username: string; repo: string; range: string; author: string } | null = null;
   readonly SparklesIcon = Sparkles;
 
   private destroy$ = new Subject<void>();
 
-  constructor(private communicationService: CommunicationService) {}
+  constructor(
+    private communicationService: CommunicationService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.communicationService.events$.pipe(takeUntil(this.destroy$)).subscribe((event) => {
       if (!event) return;
 
-      if (event.type === 'commits_loaded' && event.data?.commits) {
+      if (event.type === AppEventType.COMMITS_LOADED && event.data?.commits) {
         this.selectedCommits = event.data.commits.filter((c: Commit) => c.selected);
         // Récupérer les infos du GitHub Form depuis les données de l'événement
         if (event.data.githubInfo) {
           this.githubInfo = event.data.githubInfo;
         }
+        // Forcer la détection de changement pour mettre à jour l'affichage
+        this.cdr.detectChanges();
       }
 
-      if (event.type === 'selected_commits_changed' && event.data) {
+      if (event.type === AppEventType.SELECTED_COMMITS_CHANGED && event.data) {
         this.selectedCommits = event.data;
       }
     });
@@ -63,6 +78,12 @@ export class GeneratePostComponent implements OnInit, OnDestroy {
       tone: this.tone,
       platform: this.platform,
       commits: this.selectedCommits,
+    });
+
+    // Émettre l'événement de changement de plateforme uniquement au clic sur Generate Post
+    this.communicationService.emitEvent({
+      type: AppEventType.PLATFORM_CHANGED,
+      data: { platform: this.platform }
     });
 
     // Préparer la requête pour le backend

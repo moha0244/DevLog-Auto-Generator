@@ -33,15 +33,16 @@
       </div>
       <!-- LinkedIn Preview -->
       <div class="card">
-
         <div class="card-body">
-          <app-social-preview 
-            [content]="generatedContent" 
+          <app-social-preview
+            [content]="generatedContent"
             [platformName]="selectedPlatform"
+            [platform]="selectedPlatform"
             [githubUsername]="githubInfo?.username || ''"
             [githubAuthor]="githubInfo?.author || ''"
             [isGenerated]="!!generatedContent"
-            emptyMessage="Generate a post to see the preview">
+            emptyMessage="Generate a post to see the preview"
+          >
           </app-social-preview>
         </div>
       </div>

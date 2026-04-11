@@ -1,11 +1,11 @@
 <div class="social-preview">
-  <div class="preview-card">
+  <div class="preview-card" [ngClass]="getPlatformClass()">
     <div class="preview-card-header">
       <div class="header-left">
-        <div class="icon-box linkedin">
-          <lucide-angular [img]="LinkedinIcon" [size]="16"></lucide-angular>
+        <div class="icon-box" [ngClass]="getPlatformClass()">
+          <lucide-angular [img]="getPlatformIcon()" [size]="16"></lucide-angular>
         </div>
-        <span>LinkedIn Preview</span>
+        <span>{{ getPlatformName() }}</span>
       </div>
 
       <div class="header-actions" *ngIf="content || previewContent">
@@ -13,11 +13,7 @@
           {{ isEditing ? 'Preview' : 'Edit' }}
         </button>
 
-        <button
-          class="toolbar-btn ok-btn"
-          type="button"
-          *ngIf="isEditing"
-          (click)="confirmEdit()">
+        <button class="toolbar-btn ok-btn" type="button" *ngIf="isEditing" (click)="confirmEdit()">
           <lucide-angular [img]="CheckIcon" [size]="14"></lucide-angular>
           OK
         </button>
@@ -31,66 +27,103 @@
 
     <div class="preview-card-body">
       <ng-container *ngIf="content || previewContent; else emptyState">
-        <div class="linkedin-post-card">
-          <div class="linkedin-post-header">
-            <div class="author-avatar"></div>
+        <!-- LINKEDIN -->
+        <ng-container *ngIf="getPlatformName() === 'LinkedIn'; else xTemplate">
+          <div class="linkedin-post-card">
+            <div class="linkedin-post-header">
+              <div class="author-avatar"></div>
 
-            <div class="author-meta">
-              <div class="author-name">{{ getAuthorName() }}</div>
-              <div class="author-headline">{{ getAuthorHeadline() }}</div>
-              <div class="author-time">{{ getCurrentTime() }} · 🌐</div>
-            </div>
-          </div>
-
-          <div class="linkedin-post-content">
-            <ng-container *ngIf="!isEditing; else editMode">
-              <div
-                class="post-text"
-                [innerHTML]="formatContent(getDisplayedContent())">
+              <div class="author-meta">
+                <div class="author-name">{{ getAuthorName() }}</div>
+                <div class="author-headline">{{ getAuthorHeadline() }}</div>
+                <div class="author-time">{{ getCurrentTime() }} · 🌐</div>
               </div>
-            </ng-container>
+            </div>
 
-            <ng-template #editMode>
-              <div class="editor-wrapper">
-                <textarea
-                  class="post-editor"
-                  [(ngModel)]="editedContent"
-                  spellcheck="true">
-                </textarea>
+            <div class="linkedin-post-content">
+              <ng-container *ngIf="!isEditing; else editMode">
+                <div class="post-text" [innerHTML]="formatContent(getDisplayedContent())"></div>
+              </ng-container>
+            </div>
+
+            <div class="linkedin-post-stats">
+              <div class="left-stats">
+                <span>👍 0</span>
+                <span>💡 0</span>
               </div>
-            </ng-template>
-          </div>
 
-          <div class="linkedin-post-stats">
-            <div class="left-stats">
-              <span>👍 0</span>
-              <span>💡 0</span>
+              <div class="right-stats">
+                <span>0 comments</span>
+                <span>·</span>
+                <span>0 reposts</span>
+              </div>
             </div>
 
-            <div class="right-stats">
-              <span>0 comments</span>
-              <span>·</span>
-              <span>0 reposts</span>
+            <div class="linkedin-post-actions">
+              <button type="button" class="action-btn">
+                <lucide-angular [img]="ThumbsUpIcon" [size]="18"></lucide-angular>
+                <span>Like</span>
+              </button>
+
+              <button type="button" class="action-btn">
+                <lucide-angular [img]="MessageCircleIcon" [size]="18"></lucide-angular>
+                <span>Comment</span>
+              </button>
+
+              <button type="button" class="action-btn">
+                <lucide-angular [img]="Repeat2Icon" [size]="18"></lucide-angular>
+                <span>Repost</span>
+              </button>
             </div>
           </div>
+        </ng-container>
 
-          <div class="linkedin-post-actions">
-            <button type="button" class="action-btn">
-              <lucide-angular [img]="ThumbsUpIcon" [size]="18"></lucide-angular>
-              <span>Like</span>
-            </button>
+        <!-- X -->
+        <ng-template #xTemplate>
+          <div class="x-post-card">
+            <div class="x-post-header">
+              <div class="author-avatar x-avatar"></div>
 
-            <button type="button" class="action-btn">
-              <lucide-angular [img]="MessageCircleIcon" [size]="18"></lucide-angular>
-              <span>Comment</span>
-            </button>
+              <div class="x-author-block">
+                <div class="x-author-row">
+                  <span class="x-author-name">{{ getAuthorName() }}</span>
+                  <span class="x-author-handle">@{{ getAuthorName().toLowerCase() }}</span>
+                  <span class="x-dot">·</span>
+                  <span class="x-time">now</span>
+                </div>
 
-            <button type="button" class="action-btn">
-              <lucide-angular [img]="Repeat2Icon" [size]="18"></lucide-angular>
-              <span>Repost</span>
-            </button>
+                <div class="x-author-role">{{ getAuthorHeadline() }}</div>
+              </div>
+            </div>
+
+            <div class="x-post-content">
+              <ng-container *ngIf="!isEditing; else editMode">
+                <div class="x-post-text" [innerHTML]="formatContent(getDisplayedContent())"></div>
+              </ng-container>
+            </div>
+
+            <div class="x-post-metrics">
+              <span><strong>0</strong> Replies</span>
+              <span><strong>0</strong> Reposts</span>
+              <span><strong>0</strong> Likes</span>
+              <span><strong>0</strong> Bookmarks</span>
+            </div>
+
+            <div class="x-post-actions">
+              <button type="button" class="x-action-btn">Reply</button>
+              <button type="button" class="x-action-btn">Repost</button>
+              <button type="button" class="x-action-btn">Like</button>
+              <button type="button" class="x-action-btn">Share</button>
+            </div>
           </div>
-        </div>
+        </ng-template>
+
+        <!-- EDIT MODE COMMUN -->
+        <ng-template #editMode>
+          <div class="editor-wrapper" [ngClass]="getPlatformClass()">
+            <textarea class="post-editor" [(ngModel)]="editedContent" spellcheck="true"> </textarea>
+          </div>
+        </ng-template>
       </ng-container>
 
       <ng-template #emptyState>

@@ -80,7 +80,8 @@ export enum AppEventType {
   POST_GENERATION_STARTED = 'post_generation_started',
   ERROR = 'error',
   LOADING = 'loading',
-  SELECTED_COMMITS_CHANGED = 'selected_commits_changed'
+  SELECTED_COMMITS_CHANGED = 'selected_commits_changed',
+  PLATFORM_CHANGED = 'platform_changed'
 }
 
 // Interface from Communication service
