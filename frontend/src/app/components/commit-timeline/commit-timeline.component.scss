@@ -1,0 +1,263 @@
+:host {
+  display: block;
+}
+
+.commit-card {
+  background: #ffffff;
+}
+
+/* header identique à ton style actuel */
+.commit-card-header {
+  background: #f6f8fa;
+  border-bottom: 1px solid #d0d7de;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #57606a;
+}
+
+.commit-card-header span {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2328;
+}
+
+/* actions en haut */
+.timeline-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.text-action {
+  border: none;
+  background: transparent;
+  padding: 0;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: #57606a;
+  cursor: pointer;
+}
+
+.text-action:hover {
+  text-decoration: underline;
+}
+
+.text-action.success {
+  color: #2da44e;
+}
+
+.divider {
+  color: #d0d7de;
+  font-size: 14px;
+  line-height: 1;
+}
+
+/* 2e ligne grise */
+.timeline-toolbar {
+  background: #f6f8fa;
+  border-bottom: 1px solid #d0d7de;
+  padding: 14px 16px;
+}
+
+.timeline-summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.summary-total {
+  font-size: 14px;
+  font-weight: 600;
+  color: #344054;
+}
+
+.language-item {
+  font-size: 14px;
+  font-weight: 400;
+  color: #667085;
+}
+
+/* liste blanche */
+.timeline-content {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+}
+
+.commit-item {
+  display: flex;
+  gap: 14px;
+  padding: 22px 16px 18px;
+  border-bottom: 1px solid #d0d7de;
+  background: #ffffff;
+}
+
+.commit-item:last-child {
+  border-bottom: none;
+}
+
+.commit-left {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding-top: 2px;
+  flex-shrink: 0;
+}
+
+.row-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #98a2b3;
+  transform: scale(1.5);
+  transform-origin: center;
+}
+
+/* checkbox bleu foncé */
+.commit-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  border-radius: 3px;
+  border: 1px solid #0969da;
+  background: #ffffff;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.commit-checkbox:checked {
+  background: #0969da;
+  border-color: #0969da;
+}
+
+.commit-checkbox:checked::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 0px;
+  width: 4px;
+  height: 9px;
+  border: solid #ffffff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.commit-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.commit-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.commit-message {
+  flex: 1;
+  min-width: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: #101828;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* espace réduit entre message et meta */
+.commit-meta {
+  margin-top: -6px;
+  font-size: 13px;
+  line-height: 1.35;
+  color: #667085;
+}
+
+.commit-files {
+  margin-top: -6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  color: #98a2b3;
+}
+
+.commit-sha {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 74px;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: #98a2b3;
+  background: #f2f4f7;
+  border: 1px solid #eaecf0;
+}
+
+.commit-sha:hover {
+  color: #0969da;
+  background: #f8fbff;
+  border-color: #d0e3ff;
+}
+
+.empty-state {
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 32px;
+  text-align: center;
+  background: #ffffff;
+}
+
+.empty-state p {
+  font-size: 14px;
+  color: #6e7781;
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .commit-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .commit-top-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .commit-message {
+    white-space: normal;
+  }
+}

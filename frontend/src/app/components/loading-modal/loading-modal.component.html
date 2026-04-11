@@ -1,0 +1,65 @@
+<div class="modal-overlay" *ngIf="loadingState.isVisible" (click)="closeModal()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <div class="header-content">
+        <div class="icon-box">
+          <lucide-angular [img]="GitBranchIcon" [size]="16"></lucide-angular>
+        </div>
+        <h3 class="modal-title">
+          <span *ngIf="isLoadingState">{{ loadingState.title || 'Récupération des commits...' }}</span>
+          <span *ngIf="isErrorState">{{ loadingState.title || 'Erreur de récupération' }}</span>
+        </h3>
+      </div>
+
+      <button class="close-button" (click)="closeModal()" aria-label="Fermer">
+        <lucide-angular [img]="XIcon" [size]="16"></lucide-angular>
+      </button>
+    </div>
+
+    <div class="modal-content">
+      <div *ngIf="isLoadingState" class="loading-content">
+        <div class="loading-spinner">
+          <lucide-angular [img]="Loader2Icon" class="spinner-icon" [size]="22"></lucide-angular>
+        </div>
+
+        <div class="loading-text">
+          <p class="repo-name">{{ loadingState.repoName }}</p>
+          <p class="loading-message">{{ loadingState.subtitle || 'Analyse des commits en cours...' }}</p>
+        </div>
+      </div>
+
+      <div *ngIf="isErrorState" class="error-content">
+        <div class="error-icon">
+          <lucide-angular [img]="AlertCircleIcon" [size]="20"></lucide-angular>
+        </div>
+
+        <div class="error-text">
+          <p class="error-title" *ngIf="is404Error">Dépôt introuvable</p>
+          <p class="error-title" *ngIf="!is404Error">Erreur de connexion</p>
+
+          <p class="error-message">
+            <span *ngIf="is404Error">
+              Le dépôt <strong>{{ loadingState.repoName }}</strong> n'existe pas ou n'est pas accessible.
+              <br />
+              Vérifiez que le nom du dépôt est correct et que vous avez les permissions nécessaires.
+            </span>
+
+            <span *ngIf="!is404Error">
+              {{ loadingState.error }}
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button *ngIf="isErrorState" class="action-button" (click)="closeModal()">
+        Fermer
+      </button>
+
+      <button *ngIf="isLoadingState" class="action-button secondary" (click)="closeModal()">
+        Réduire
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,85 @@
+.generate-post {
+  background: #ffffff;
+}
+
+.generate-header {
+  background: #f6f8fa;
+  border-bottom: 1px solid #d0d7de;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #57606a;
+}
+
+.generate-header span {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2328;
+}
+
+.generate-body {
+  padding: 20px 16px;
+}
+
+.generate-row {
+  display: flex;
+  align-items: end;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.generate-field {
+  display: flex;
+  flex-direction: column;
+  min-width: 180px;
+}
+
+.generate-field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1f2328;
+  margin-bottom: 6px;
+}
+
+.generate-field select {
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid #d0d7de;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  background: #ffffff;
+  color: #1f2328;
+}
+
+.generate-actions button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 8px;
+  background: #1f2937;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.generate-actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

@@ -1,0 +1,104 @@
+<div class="social-preview">
+  <div class="preview-card">
+    <div class="preview-card-header">
+      <div class="header-left">
+        <div class="icon-box linkedin">
+          <lucide-angular [img]="LinkedinIcon" [size]="16"></lucide-angular>
+        </div>
+        <span>LinkedIn Preview</span>
+      </div>
+
+      <div class="header-actions" *ngIf="content || previewContent">
+        <button class="toolbar-btn" type="button" (click)="toggleEditMode()">
+          {{ isEditing ? 'Preview' : 'Edit' }}
+        </button>
+
+        <button
+          class="toolbar-btn ok-btn"
+          type="button"
+          *ngIf="isEditing"
+          (click)="confirmEdit()">
+          <lucide-angular [img]="CheckIcon" [size]="14"></lucide-angular>
+          OK
+        </button>
+
+        <button class="toolbar-btn" type="button" (click)="copyContent()">
+          <lucide-angular [img]="CopyIcon" [size]="14"></lucide-angular>
+          Copy
+        </button>
+      </div>
+    </div>
+
+    <div class="preview-card-body">
+      <ng-container *ngIf="content || previewContent; else emptyState">
+        <div class="linkedin-post-card">
+          <div class="linkedin-post-header">
+            <div class="author-avatar"></div>
+
+            <div class="author-meta">
+              <div class="author-name">{{ getAuthorName() }}</div>
+              <div class="author-headline">{{ getAuthorHeadline() }}</div>
+              <div class="author-time">{{ getCurrentTime() }} · 🌐</div>
+            </div>
+          </div>
+
+          <div class="linkedin-post-content">
+            <ng-container *ngIf="!isEditing; else editMode">
+              <div
+                class="post-text"
+                [innerHTML]="formatContent(getDisplayedContent())">
+              </div>
+            </ng-container>
+
+            <ng-template #editMode>
+              <div class="editor-wrapper">
+                <textarea
+                  class="post-editor"
+                  [(ngModel)]="editedContent"
+                  spellcheck="true">
+                </textarea>
+              </div>
+            </ng-template>
+          </div>
+
+          <div class="linkedin-post-stats">
+            <div class="left-stats">
+              <span>👍 0</span>
+              <span>💡 0</span>
+            </div>
+
+            <div class="right-stats">
+              <span>0 comments</span>
+              <span>·</span>
+              <span>0 reposts</span>
+            </div>
+          </div>
+
+          <div class="linkedin-post-actions">
+            <button type="button" class="action-btn">
+              <lucide-angular [img]="ThumbsUpIcon" [size]="18"></lucide-angular>
+              <span>Like</span>
+            </button>
+
+            <button type="button" class="action-btn">
+              <lucide-angular [img]="MessageCircleIcon" [size]="18"></lucide-angular>
+              <span>Comment</span>
+            </button>
+
+            <button type="button" class="action-btn">
+              <lucide-angular [img]="Repeat2Icon" [size]="18"></lucide-angular>
+              <span>Repost</span>
+            </button>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-template #emptyState>
+        <div class="empty-state">
+          <lucide-angular [img]="FileTextIcon" [size]="30"></lucide-angular>
+          <p>{{ emptyMessage }}</p>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

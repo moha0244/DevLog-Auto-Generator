@@ -1,0 +1,60 @@
+<!-- dashboard.component.html -->
+<div class="page">
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="topbar-content">
+      <div class="app-title-row">
+        <div class="app-icon">
+          <lucide-angular [img]="GithubIcon" [size]="24"></lucide-angular>
+        </div>
+
+        <div class="app-title">
+          <h1>DevLog Auto-Generator</h1>
+          <p class="tagline">Turn your commits into polished social posts</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="container">
+    <!-- GitHub Form -->
+    <app-github-form></app-github-form>
+
+    <!-- Bottom -->
+    <div class="two-columns">
+      <!-- Commit Timeline -->
+      <div class="left-column">
+        <div class="card timeline-card">
+          <div class="card-body timeline-card-body">
+            <app-commit-timeline></app-commit-timeline>
+          </div>
+        </div>
+      </div>
+      <!-- LinkedIn Preview -->
+      <div class="card">
+
+        <div class="card-body">
+          <app-social-preview 
+            [content]="generatedContent" 
+            [platformName]="selectedPlatform"
+            [githubUsername]="githubInfo?.username || ''"
+            [githubAuthor]="githubInfo?.author || ''"
+            [isGenerated]="!!generatedContent"
+            emptyMessage="Generate a post to see the preview">
+          </app-social-preview>
+        </div>
+      </div>
+    </div>
+
+    <!-- Generate Post -->
+    <div class="card generate-post-card" *ngIf="hasCommits">
+      <div class="card-body">
+        <app-generate-post></app-generate-post>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Loading Modal -->
+<app-loading-modal></app-loading-modal>

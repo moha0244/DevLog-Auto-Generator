@@ -1,0 +1,79 @@
+<div class="commit-card" *ngIf="commits.length > 0; else emptyState">
+  <div class="commit-card-header">
+    <div class="header-left">
+      <div class="icon-box">
+        <lucide-angular [img]="GitCommitIcon" [size]="16"></lucide-angular>
+      </div>
+      <span>Commit Timeline</span>
+    </div>
+
+    <div class="timeline-actions">
+      <button type="button" class="text-action success" (click)="selectAll()">Select all</button>
+      <span class="divider">|</span>
+      <button type="button" class="text-action" (click)="selectNone()">Select none</button>
+    </div>
+  </div>
+
+  <div class="timeline-toolbar">
+    <div class="timeline-summary">
+      <span class="summary-total">{{ summary.totalCommits }} commits</span>
+
+      <ng-container *ngFor="let item of summary.languageBreakdown">
+        <span class="divider">|</span>
+        <span class="language-item">{{ item.name }} ({{ item.count }})</span>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="timeline-content">
+    <div class="commit-item" *ngFor="let commit of commits; trackBy: trackByCommit">
+      <div class="commit-left">
+        <lucide-angular class="row-icon" [img]="GitCommitIcon" [size]="15"></lucide-angular>
+
+        <input
+          class="commit-checkbox"
+          type="checkbox"
+          [checked]="commit.selected"
+          (change)="toggleCommit(commit)"
+        />
+      </div>
+
+      <div class="commit-main">
+        <div class="commit-top-row">
+          <div class="commit-message" [title]="commit.message">
+            {{ commit.message }}
+          </div>
+
+          <a class="commit-sha" [href]="commit.url" target="_blank" rel="noopener noreferrer">
+            {{ commit.sha }}
+          </a>
+        </div>
+
+        <div class="commit-meta">{{ getDisplayDate(commit) }} · {{ commit.author }}</div>
+
+        <div class="commit-files">
+          <lucide-angular [img]="ChevronRightIcon" [size]="13"></lucide-angular>
+          <span>{{ getFilesChangedLabel(commit.filesChanged) }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #emptyState>
+  <div class="commit-card">
+    <div class="commit-card-header">
+      <div class="header-left">
+        <div class="icon-box">
+          <lucide-angular [img]="GitCommitIcon" [size]="25"></lucide-angular>
+        </div>
+        <span>Commit Timeline</span>
+      </div>
+    </div>
+
+    <div class="empty-state">
+      <lucide-angular [img]="GitCommitIcon" [size]="30"></lucide-angular>
+      <p>Fetch commits to see your timeline</p>
+    </div>
+  </div>
+</ng-template>

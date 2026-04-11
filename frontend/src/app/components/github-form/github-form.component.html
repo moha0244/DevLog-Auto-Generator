@@ -1,0 +1,87 @@
+<div class="card">
+  <div class="card-header">
+    <div class="header-left">
+      <lucide-angular [img]="GithubIcon" [size]="16"></lucide-angular>
+      <span>Connection & Scope</span>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="form-grid">
+      <div class="form-group">
+        <label>GitHub Username</label>
+        <div class="input-wrap">
+          <lucide-angular class="input-icon" [img]="UserIcon" [size]="16"></lucide-angular>
+          <input
+            type="text"
+            placeholder="janedoe"
+            [(ngModel)]="form.username"
+            name="username"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Repository</label>
+        <div class="input-wrap">
+          <input
+            type="text"
+            placeholder="my-saas-app"
+            [(ngModel)]="form.repo"
+            name="repo"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Date Range</label>
+        <div class="input-wrap">
+          <lucide-angular class="input-icon" [img]="CalendarIcon" [size]="16"></lucide-angular>
+          <select [(ngModel)]="form.range" name="range">
+            <option>Last 1 day</option>
+            <option>Last 7 days</option>
+            <option>Last 30 days</option>
+            <option>Last 3 months</option>
+            <option>Last 1 year</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Author <span class="optional">(optional)</span></label>
+        <div class="input-wrap">
+          <lucide-angular class="input-icon" [img]="UserIcon" [size]="16"></lucide-angular>
+          <input
+            type="text"
+            placeholder="Filter by author"
+            [(ngModel)]="form.author"
+            name="author"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-row">
+      <div class="token-group">
+        <label>Personal Access Token</label>
+        <div class="input-wrap">
+          <lucide-angular class="input-icon" [img]="KeyIcon" [size]="16"></lucide-angular>
+          <input
+            type="password"
+            placeholder="ghp_xxxxxxxxxxxx"
+            [(ngModel)]="form.token"
+            name="token"
+          />
+        </div>
+        <small>Optional. Required for private repos. Never stored.</small>
+      </div>
+
+      <div class="actions">
+        <button class="fetch-btn" (click)="onFetchCommits()">
+          <lucide-angular [img]="GithubIcon" [size]="16"></lucide-angular>
+          <span>Fetch Commits</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
