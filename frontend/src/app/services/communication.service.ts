@@ -10,13 +10,14 @@ import {
   PostGenerationResponse,
 } from '../models/github-api.model';
 import { LoadingService } from './loading.service';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CommunicationService {
   private eventSubject = new BehaviorSubject<AppEvent | null>(null);
-  private readonly baseUrl = 'http://localhost:8000';
+  private readonly baseUrl = environment.apiUrl;
   private cancelSubject = new Subject<void>();
 
   // Observable pour que les composants puissent s'abonner
