@@ -23,7 +23,7 @@ app = FastAPI(
 # Configuration CORS pour permettre les requêtes du frontend Angular
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:4200"],  # URL par défaut de Angular CLI
+    allow_origins=["*"],  # Accepter toutes les origines
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
