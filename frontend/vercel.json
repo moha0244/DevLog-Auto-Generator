@@ -2,5 +2,11 @@
   "buildCommand": "ng build --configuration production",
   "outputDirectory": "dist/devlog-frontend",
   "installCommand": "npm install",
-  "framework": "angular"
+  "framework": "angular",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
 }
