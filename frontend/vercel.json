@@ -1,5 +1,5 @@
 {
-  "buildCommand": "ng build --configuration production --ssr false",
+  "buildCommand": "ng build --configuration production",
   "outputDirectory": "dist/devlog-frontend/browser",
   "installCommand": "npm install",
   "framework": "angular",
