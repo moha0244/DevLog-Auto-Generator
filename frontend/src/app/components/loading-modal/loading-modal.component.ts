@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LucideAngularModule, Loader2, X, AlertCircle, GitBranch, Sparkles } from 'lucide-angular';
+import { LucideAngularModule, Loader2, AlertCircle, GitBranch, Sparkles } from 'lucide-angular';
 import { LoadingService, LoadingState } from '../../services/loading.service';
 import { CommunicationService } from '../../services/communication.service';
 import { Subscription } from 'rxjs';
@@ -25,7 +25,6 @@ export class LoadingModalComponent implements OnInit, OnDestroy {
   private subscription: Subscription | null = null;
 
   readonly Loader2Icon = Loader2;
-  readonly XIcon = X;
   readonly AlertCircleIcon = AlertCircle;
   readonly GitBranchIcon = GitBranch;
   readonly SparklesIcon = Sparkles;
@@ -48,7 +47,7 @@ export class LoadingModalComponent implements OnInit, OnDestroy {
   closeModal(): void {
     this.loadingService.hideLoading();
   }
-
+  
   cancelOperation(): void {
     // Annuler les requêtes HTTP en cours
     this.communicationService.cancelOperations();

@@ -1,4 +1,4 @@
-<div class="modal-overlay" *ngIf="loadingState.isVisible" (click)="closeModal()">
+<div class="modal-overlay" *ngIf="loadingState.isVisible" (click)="$event.stopPropagation()">
   <div class="modal-container" (click)="$event.stopPropagation()">
     <div class="modal-header">
       <div class="header-content">
@@ -10,10 +10,6 @@
           <span *ngIf="isErrorState">{{ loadingState.title || 'Erreur de récupération' }}</span>
         </h3>
       </div>
-
-      <button class="close-button" (click)="closeModal()" aria-label="Fermer">
-        <lucide-angular [img]="XIcon" [size]="16"></lucide-angular>
-      </button>
     </div>
 
     <div class="modal-content">
