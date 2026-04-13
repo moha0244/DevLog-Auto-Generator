@@ -1,0 +1,6 @@
+{
+  "buildCommand": "ng build --configuration production",
+  "outputDirectory": "dist/frontend",
+  "installCommand": "npm install",
+  "framework": "angular"
+}
