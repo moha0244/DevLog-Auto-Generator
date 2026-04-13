@@ -1,8 +1,8 @@
 # Python dependencies for FastAPI backend
-fastapi==0.110.0
-uvicorn[standard]==0.28.0
-pydantic==2.6.4
-PyGithub==2.2.0
-python-multipart==0.0.9
+fastapi==0.95.2
+uvicorn[standard]==0.22.0
+pydantic==1.10.13
+PyGithub==1.59.1
+python-multipart==0.0.6
 requests==2.31.0
-python-dotenv==1.0.1
+python-dotenv==1.0.0
