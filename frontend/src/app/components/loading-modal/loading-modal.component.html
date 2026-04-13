@@ -3,7 +3,7 @@
     <div class="modal-header">
       <div class="header-content">
         <div class="icon-box">
-          <lucide-angular [img]="GitBranchIcon" [size]="16"></lucide-angular>
+          <lucide-angular [img]="getHeaderIcon" [size]="16"></lucide-angular>
         </div>
         <h3 class="modal-title">
           <span *ngIf="isLoadingState">{{ loadingState.title || 'Récupération des commits...' }}</span>
@@ -57,8 +57,8 @@
         Fermer
       </button>
 
-      <button *ngIf="isLoadingState" class="action-button secondary" (click)="closeModal()">
-        Réduire
+      <button *ngIf="isLoadingState" class="action-button secondary" (click)="cancelOperation()">
+        Annuler
       </button>
     </div>
   </div>

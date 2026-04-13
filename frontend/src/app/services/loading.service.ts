@@ -22,12 +22,16 @@ export class LoadingService {
     title: '',
     subtitle: ''
   });
+  private abortController: AbortController | null = null;
 
   // Observable pour que les composants puissent s'abonner
   public loadingState = this.loadingState$.asObservable();
 
   // Méthodes pour contrôler l'état
-  showLoading(repoName: string, title: string = '', subtitle: string = ''): void {
+  showLoading(repoName: string, title: string = '', subtitle: string = ''): AbortController {
+    // Créer un nouvel AbortController pour cette opération
+    this.abortController = new AbortController();
+    
     this.loadingState$.next({
       isVisible: true,
       isLoading: true,
@@ -36,6 +40,8 @@ export class LoadingService {
       title,
       subtitle
     });
+    
+    return this.abortController;
   }
 
   hideLoading(): void {
@@ -47,6 +53,19 @@ export class LoadingService {
       title: '',
       subtitle: ''
     });
+    this.abortController = null;
+  }
+
+  cancelOperation(): void {
+    if (this.abortController) {
+      this.abortController.abort();
+      this.abortController = null;
+    }
+    this.hideLoading();
+  }
+
+  getAbortSignal(): AbortSignal | null {
+    return this.abortController?.signal || null;
   }
 
   showError(error: string, repoName: string = '', title: string = '', subtitle: string = ''): void {

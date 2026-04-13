@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LucideAngularModule, Loader2, X, AlertCircle, GitBranch } from 'lucide-angular';
+import { LucideAngularModule, Loader2, X, AlertCircle, GitBranch, Sparkles } from 'lucide-angular';
 import { LoadingService, LoadingState } from '../../services/loading.service';
+import { CommunicationService } from '../../services/communication.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -27,8 +28,9 @@ export class LoadingModalComponent implements OnInit, OnDestroy {
   readonly XIcon = X;
   readonly AlertCircleIcon = AlertCircle;
   readonly GitBranchIcon = GitBranch;
+  readonly SparklesIcon = Sparkles;
 
-  constructor(private loadingService: LoadingService) {}
+  constructor(private loadingService: LoadingService, private communicationService: CommunicationService) {}
 
   ngOnInit(): void {
     // S'abonner aux changements d'état de chargement
@@ -47,6 +49,13 @@ export class LoadingModalComponent implements OnInit, OnDestroy {
     this.loadingService.hideLoading();
   }
 
+  cancelOperation(): void {
+    // Annuler les requêtes HTTP en cours
+    this.communicationService.cancelOperations();
+    // Fermer le modal
+    this.loadingService.hideLoading();
+  }
+
   get is404Error(): boolean {
     if (!this.loadingState.error) return false;
     const errorLower = this.loadingState.error.toLowerCase();
@@ -61,5 +70,14 @@ export class LoadingModalComponent implements OnInit, OnDestroy {
 
   get isErrorState(): boolean {
     return !!this.loadingState.error;
+  }
+
+  get isPostGeneration(): boolean {
+    return this.loadingState.title?.toLowerCase().includes('génération') || 
+           this.loadingState.title?.toLowerCase().includes('post');
+  }
+
+  get getHeaderIcon(): any {
+    return this.isPostGeneration ? this.SparklesIcon : this.GitBranchIcon;
   }
 }

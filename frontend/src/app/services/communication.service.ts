@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { takeUntil } from 'rxjs/operators';
 import {
   GitHubCommitsResponse,
   AppEvent,
@@ -8,6 +9,7 @@ import {
   PostGenerationRequest,
   PostGenerationResponse,
 } from '../models/github-api.model';
+import { LoadingService } from './loading.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,11 +17,12 @@ import {
 export class CommunicationService {
   private eventSubject = new BehaviorSubject<AppEvent | null>(null);
   private readonly baseUrl = 'http://localhost:8000';
+  private cancelSubject = new Subject<void>();
 
   // Observable pour que les composants puissent s'abonner
   public events$: Observable<AppEvent | null> = this.eventSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private loadingService: LoadingService) {}
 
   // Émettre un événement
   emitEvent(event: AppEvent): void {
@@ -88,6 +91,7 @@ export class CommunicationService {
 
       const response = await this.http
         .post<GitHubCommitsResponse>(`${this.baseUrl}/github/commits`, request)
+        .pipe(takeUntil(this.cancelSubject))
         .toPromise();
 
       if (response?.error) {
@@ -127,6 +131,7 @@ export class CommunicationService {
 
       const response = await this.http
         .post<PostGenerationResponse>(`${this.baseUrl}/api/generate`, request)
+        .pipe(takeUntil(this.cancelSubject))
         .toPromise();
 
       if (response?.error) {
@@ -148,5 +153,10 @@ export class CommunicationService {
     } finally {
       this.emitLoading(false);
     }
+  }
+
+  cancelOperations(): void {
+    this.cancelSubject.next();
+    this.cancelSubject = new Subject<void>();
   }
 }
