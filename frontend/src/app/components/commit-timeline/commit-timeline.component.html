@@ -4,13 +4,13 @@
       <div class="icon-box">
         <lucide-angular [img]="GitCommitIcon" [size]="16"></lucide-angular>
       </div>
-      <span>Commit Timeline</span>
+      <span>Chronologie des commits</span>
     </div>
 
     <div class="timeline-actions">
-      <button type="button" class="text-action success" (click)="selectAll()">Select all</button>
+      <button type="button" class="text-action success" (click)="selectAll()">Tout sélectionner</button>
       <span class="divider">|</span>
-      <button type="button" class="text-action" (click)="selectNone()">Select none</button>
+      <button type="button" class="text-action" (click)="selectNone()">Ne rien sélectionner</button>
     </div>
   </div>
 
@@ -67,13 +67,13 @@
         <div class="icon-box">
           <lucide-angular [img]="GitCommitIcon" [size]="25"></lucide-angular>
         </div>
-        <span>Commit Timeline</span>
+        <span>Chronologie des commits</span>
       </div>
     </div>
 
     <div class="empty-state">
       <lucide-angular [img]="GitCommitIcon" [size]="30"></lucide-angular>
-      <p>Fetch commits to see your timeline</p>
+      <p>Récupérez les commits pour voir votre chronologie</p>
     </div>
   </div>
 </ng-template>

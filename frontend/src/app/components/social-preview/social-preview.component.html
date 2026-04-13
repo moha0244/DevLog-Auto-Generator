@@ -10,7 +10,7 @@
 
       <div class="header-actions" *ngIf="content || previewContent">
         <button class="toolbar-btn" type="button" (click)="toggleEditMode()">
-          {{ isEditing ? 'Preview' : 'Edit' }}
+          {{ isEditing ? 'précedent' : 'Modifier' }}
         </button>
 
         <button class="toolbar-btn ok-btn" type="button" *ngIf="isEditing" (click)="confirmEdit()">
@@ -20,7 +20,7 @@
 
         <button class="toolbar-btn" type="button" (click)="copyContent()">
           <lucide-angular [img]="CopyIcon" [size]="14"></lucide-angular>
-          Copy
+          Copier
         </button>
       </div>
     </div>
@@ -89,7 +89,7 @@
                   <span class="x-author-name">{{ getAuthorName() }}</span>
                   <span class="x-author-handle">@{{ getAuthorName().toLowerCase() }}</span>
                   <span class="x-dot">·</span>
-                  <span class="x-time">now</span>
+                  <span class="x-time">{{ getCurrentTime() }}</span>
                 </div>
 
                 <div class="x-author-role">{{ getAuthorHeadline() }}</div>

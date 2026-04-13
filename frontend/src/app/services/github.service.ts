@@ -40,7 +40,7 @@ export class GitHubService {
     });
   }
 
-  // Transform GitHub API response to our internal format
+
   transformCommits(commits: GitHubCommit[]): any[] {
     return commits.map(commit => ({
       sha: commit.sha.substring(0, 7),

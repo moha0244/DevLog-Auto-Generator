@@ -22,7 +22,7 @@ export class GithubFormComponent {
   form: FormData = {
     username: '',
     repo: '',
-    range: 'Last 7 days',
+    range: '7 Derniers jours',
     author: '',
     token: '',
   };
@@ -60,15 +60,15 @@ export class GithubFormComponent {
 
   private getDaysFromRange(range: string): number {
     switch (range) {
-      case 'Last 1 day':
+      case 'Dernier jour':
         return 1;
-      case 'Last 7 days':
+      case '7 Derniers jours':
         return 7;
-      case 'Last 30 days':
+      case '30 Derniers jours':
         return 30;
-      case 'Last 3 months':
+      case '3 Derniers mois':
         return 90;
-      case 'Last 1 year':
+      case 'Dernière année':
         return 365;
       default:
         return 7;

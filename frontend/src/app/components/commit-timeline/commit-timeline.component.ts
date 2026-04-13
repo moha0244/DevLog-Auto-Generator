@@ -98,7 +98,7 @@ export class CommitTimelineComponent implements OnInit, OnDestroy {
   }
 
   getFilesChangedLabel(count: number): string {
-    return count > 1 ? `${count} files changed` : `${count} file changed`;
+    return count > 1 ? `${count} fichiers modifiés` : `${count} fichier modifié`;
   }
 
   getDisplayDate(commit: Commit): string {

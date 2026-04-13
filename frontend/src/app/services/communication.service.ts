@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { GitHubCommitsResponse, AppEvent, AppEventType, PostGenerationRequest, PostGenerationResponse } from '../models/github-api.model';
+import {
+  GitHubCommitsResponse,
+  AppEvent,
+  AppEventType,
+  PostGenerationRequest,
+  PostGenerationResponse,
+} from '../models/github-api.model';
 
 @Injectable({
   providedIn: 'root',
@@ -21,20 +27,16 @@ export class CommunicationService {
   }
 
   // Méthodes spécifiques pour faciliter l'utilisation
-  emitCommitsLoaded(payload: GitHubCommitsResponse, githubInfo?: { username: string; repo: string; range: string; author: string }): void {
+  emitCommitsLoaded(
+    payload: GitHubCommitsResponse,
+    githubInfo?: { username: string; repo: string; range: string; author: string },
+  ): void {
     this.emitEvent({
       type: AppEventType.COMMITS_LOADED,
       data: {
         ...payload,
-        githubInfo: githubInfo
+        githubInfo: githubInfo,
       },
-    });
-  }
-
-  emitDevLogGenerated(content: string): void {
-    this.emitEvent({
-      type: AppEventType.DEVLOG_GENERATED,
-      data: { content },
     });
   }
 
@@ -64,18 +66,6 @@ export class CommunicationService {
       type: AppEventType.LOADING,
       data: { isLoading },
     });
-  }
-
-  emitSelectedCommitsChanged(commits: any[]): void {
-    this.emitEvent({
-      type: AppEventType.SELECTED_COMMITS_CHANGED,
-      data: commits,
-    });
-  }
-
-  // Nettoyer les événements
-  clearEvents(): void {
-    this.eventSubject.next(null);
   }
 
   // Méthode pour communiquer avec le backend et récupérer les commits GitHub
@@ -111,7 +101,7 @@ export class CommunicationService {
 
       return response || { summary: { totalCommits: 0, languageBreakdown: [] }, commits: [] };
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      const errorMessage = error instanceof Error ? error.message : 'Erreur inconnue';
       this.emitError(errorMessage);
 
       const errorResponse: GitHubCommitsResponse = {
@@ -145,9 +135,9 @@ export class CommunicationService {
         this.emitPostGenerated(response.generated_content, response.author_headline);
       }
 
-      return response || { error: 'No response from server' };
+      return response || { error: 'Aucune réponse du serveur' };
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      const errorMessage = error instanceof Error ? error.message : 'Erreur inconnue';
       this.emitError(errorMessage);
 
       const errorResponse: PostGenerationResponse = {

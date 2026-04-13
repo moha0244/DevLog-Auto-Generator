@@ -2,14 +2,14 @@
   <div class="card-header">
     <div class="header-left">
       <lucide-angular [img]="GithubIcon" [size]="16"></lucide-angular>
-      <span>Connection & Scope</span>
+      <span>Connexion & Périmètre</span>
     </div>
   </div>
 
   <div class="card-body">
     <div class="form-grid">
       <div class="form-group">
-        <label>GitHub Username</label>
+        <label>Nom d'utilisateur GitHub</label>
         <div class="input-wrap">
           <lucide-angular class="input-icon" [img]="UserIcon" [size]="16"></lucide-angular>
           <input
@@ -22,7 +22,7 @@
       </div>
 
       <div class="form-group">
-        <label>Repository</label>
+        <label>Dépôt</label>
         <div class="input-wrap">
           <input
             type="text"
@@ -34,26 +34,26 @@
       </div>
 
       <div class="form-group">
-        <label>Date Range</label>
+        <label>Période</label>
         <div class="input-wrap">
           <lucide-angular class="input-icon" [img]="CalendarIcon" [size]="16"></lucide-angular>
           <select [(ngModel)]="form.range" name="range">
-            <option>Last 1 day</option>
-            <option>Last 7 days</option>
-            <option>Last 30 days</option>
-            <option>Last 3 months</option>
-            <option>Last 1 year</option>
+            <option>Dernier jour</option>
+            <option>7 Derniers jours</option>
+            <option>30 Derniers jours</option>
+            <option>3 Derniers mois</option>
+            <option>Dernière année</option>
           </select>
         </div>
       </div>
 
       <div class="form-group">
-        <label>Author <span class="optional">(optional)</span></label>
+        <label>Auteur <span class="optional">(optionnel)</span></label>
         <div class="input-wrap">
           <lucide-angular class="input-icon" [img]="UserIcon" [size]="16"></lucide-angular>
           <input
             type="text"
-            placeholder="Filter by author"
+            placeholder="Filtrer par auteur"
             [(ngModel)]="form.author"
             name="author"
           />
@@ -63,7 +63,7 @@
 
     <div class="bottom-row">
       <div class="token-group">
-        <label>Personal Access Token</label>
+        <label>Token d'accès personnel</label>
         <div class="input-wrap">
           <lucide-angular class="input-icon" [img]="KeyIcon" [size]="16"></lucide-angular>
           <input
@@ -73,13 +73,13 @@
             name="token"
           />
         </div>
-        <small>Optional. Required for private repos. Never stored.</small>
+        <small>Optionnel. Requis pour les dépôts privés. Jamais stocké.</small>
       </div>
 
       <div class="actions">
         <button class="fetch-btn" (click)="onFetchCommits()">
           <lucide-angular [img]="GithubIcon" [size]="16"></lucide-angular>
-          <span>Fetch Commits</span>
+          <span>Récupérer les commits</span>
         </button>
       </div>
     </div>

@@ -81,8 +81,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
       }
 
       if (event.type === AppEventType.POST_GENERATED && event.data?.content) {
-        console.log('Dashboard: Contenu généré reçu:', event.data.content);
-        console.log('Dashboard: Author headline reçu:', event.data.authorHeadline);
         setTimeout(() => {
           this.generatedContent = event.data.content;
           // Mettre à jour le githubInfo avec le headline si disponible

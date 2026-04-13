@@ -105,11 +105,19 @@ class GitHubService:
         except Exception as e:
             print(f"❌ Erreur dans le service GitHub: {str(e)}")
             print(f"💥 Type d'erreur: {type(e).__name__}")
+            
+            error_msg = str(e)
+            if "rate limit" in error_msg.lower() or "403" in error_msg:
+                if not token:
+                    error_msg = "Limite de débit GitHub dépassée. Les requêtes sans token sont limitées à 60 par heure. Veuillez fournir un token GitHub."
+                else:
+                    error_msg = "Limite de débit GitHub dépassée. Veuillez réessayer plus tard."
+            
             return GitHubCommitsResponse(
                 summary={
                     "totalCommits": 0,
                     "languageBreakdown": []
                 },
                 commits=[],
-                error=str(e)
+                error=error_msg
             )

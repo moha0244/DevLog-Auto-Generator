@@ -23,10 +23,9 @@ export class GeneratePostComponent implements OnInit, OnDestroy {
 
   set platform(value: string) {
     this._platform = value;
-   
   }
 
-  tone = 'Professional';
+  tone = 'Professionnel';
   selectedCommits: Commit[] = [];
   githubInfo: { username: string; repo: string; range: string; author: string } | null = null;
   readonly SparklesIcon = Sparkles;
@@ -35,7 +34,7 @@ export class GeneratePostComponent implements OnInit, OnDestroy {
 
   constructor(
     private communicationService: CommunicationService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -74,16 +73,11 @@ export class GeneratePostComponent implements OnInit, OnDestroy {
   async onGenerate(): Promise<void> {
     if (!this.selectedCount) return;
 
-    console.log('Generate post with:', {
-      tone: this.tone,
-      platform: this.platform,
-      commits: this.selectedCommits,
-    });
 
     // Émettre l'événement de changement de plateforme uniquement au clic sur Generate Post
     this.communicationService.emitEvent({
       type: AppEventType.PLATFORM_CHANGED,
-      data: { platform: this.platform }
+      data: { platform: this.platform },
     });
 
     // Préparer la requête pour le backend
@@ -91,21 +85,20 @@ export class GeneratePostComponent implements OnInit, OnDestroy {
       commits: this.selectedCommits,
       tone: this.tone,
       platform: this.platform,
-      language: 'French', // Gardé pour compatibilité mais non utilisé dans le prompt
-      github_info: this.githubInfo || undefined
+      language: 'French', // A  utiliser après pour le choix de la langue
+      github_info: this.githubInfo || undefined,
     };
 
     try {
       // Appeler le backend
       const response = await this.communicationService.generatePost(request);
-      
+
       if (response.error) {
         console.error('Erreur lors de la génération:', response.error);
       } else {
-        console.log('Post généré avec succès');
       }
     } catch (error) {
-      console.error('Erreur lors de l\'appel au backend:', error);
+      console.error("Erreur lors de l'appel au backend:", error);
     }
   }
 }

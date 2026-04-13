@@ -75,13 +75,12 @@ export interface GitHubRepo {
 // Enums pour les types d'événements
 export enum AppEventType {
   COMMITS_LOADED = 'commits_loaded',
-  DEVLOG_GENERATED = 'devlog_generated',
   POST_GENERATED = 'post_generated',
   POST_GENERATION_STARTED = 'post_generation_started',
   ERROR = 'error',
   LOADING = 'loading',
   SELECTED_COMMITS_CHANGED = 'selected_commits_changed',
-  PLATFORM_CHANGED = 'platform_changed'
+  PLATFORM_CHANGED = 'platform_changed',
 }
 
 // Interface from Communication service

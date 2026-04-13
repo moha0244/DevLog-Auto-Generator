@@ -5,7 +5,7 @@ import {
   SimpleChanges,
   OnInit,
   OnDestroy,
-  ChangeDetectorRef
+  ChangeDetectorRef,
 } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { CommunicationService } from '../../services/communication.service';
@@ -21,7 +21,7 @@ import {
   MessageCircle,
   Repeat2,
   Check,
-  Twitter
+  Twitter,
 } from 'lucide-angular';
 
 @Component({
@@ -29,10 +29,11 @@ import {
   standalone: true,
   imports: [CommonModule, FormsModule, LucideAngularModule],
   templateUrl: './social-preview.component.html',
-  styleUrls: ['./social-preview.component.scss']
+  styleUrls: ['./social-preview.component.scss'],
 })
 export class SocialPreviewComponent implements OnChanges, OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
+  private copyResetTimeout: ReturnType<typeof setTimeout> | null = null;
 
   @Input() content: string | null = null;
   @Input() platformName: string = 'LinkedIn';
@@ -57,30 +58,29 @@ export class SocialPreviewComponent implements OnChanges, OnInit, OnDestroy {
   editedContent = '';
   previewContent = '';
   originalAiContent = '';
+  isCopied = false;
 
   constructor(
     private communicationService: CommunicationService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
-    this.communicationService.events$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((event) => {
-        if (!event) return;
+    this.communicationService.events$.pipe(takeUntil(this.destroy$)).subscribe((event) => {
+      if (!event) return;
 
-        if (event.type === AppEventType.POST_GENERATED && event.data?.content) {
-          const nextContent = event.data.content;
-          this.originalAiContent = nextContent;
-          this.previewContent = nextContent;
+      if (event.type === AppEventType.POST_GENERATED && event.data?.content) {
+        const nextContent = event.data.content;
+        this.originalAiContent = nextContent;
+        this.previewContent = nextContent;
 
-          if (!this.isEditing) {
-            this.editedContent = nextContent;
-          }
-
-          this.cdr.detectChanges();
+        if (!this.isEditing) {
+          this.editedContent = nextContent;
         }
-      });
+
+        this.cdr.detectChanges();
+      }
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -137,7 +137,7 @@ export class SocialPreviewComponent implements OnChanges, OnInit, OnDestroy {
   async copyContent(): Promise<void> {
     const textToCopy = this.isEditing
       ? this.editedContent
-      : (this.previewContent || this.originalAiContent);
+      : this.previewContent || this.originalAiContent;
 
     if (!textToCopy?.trim()) return;
 
@@ -151,9 +151,7 @@ export class SocialPreviewComponent implements OnChanges, OnInit, OnDestroy {
   formatContent(content: string | null): string {
     if (!content) return '';
 
-    return content
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\n/g, '<br>');
+    return content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
   }
 
   getDisplayedContent(): string {
@@ -165,7 +163,7 @@ export class SocialPreviewComponent implements OnChanges, OnInit, OnDestroy {
     return now.toLocaleTimeString('fr-FR', {
       hour: '2-digit',
       minute: '2-digit',
-      hour12: false
+      hour12: false,
     });
   }
 

@@ -4,24 +4,24 @@
       <div class="icon-box">
         <lucide-angular [img]="SparklesIcon" [size]="16"></lucide-angular>
       </div>
-      <span>Generate Post</span>
+      <span>Générer un post</span>
     </div>
   </div>
 
   <div class="generate-body">
     <div class="generate-row">
       <div class="generate-field">
-        <label>Tone</label>
+        <label>Ton</label>
         <select [(ngModel)]="tone">
-          <option>Professional</option>
-          <option>Casual</option>
-          <option>Technical</option>
-          <option>decontracted</option>
+          <option>Professionnel</option>
+          <option>Décontracté</option>
+          <option>Technique</option>
+          <option>Familier</option>
         </select>
       </div>
 
       <div class="generate-field">
-        <label>Platform</label>
+        <label>Plateforme</label>
         <select [(ngModel)]="platform">
           <option>LinkedIn</option>
           <option>X</option>
@@ -31,7 +31,7 @@
       <div class="generate-actions">
         <button type="button" [disabled]="!effectiveCommitCount" (click)="onGenerate()">
           <lucide-angular [img]="SparklesIcon" [size]="16"></lucide-angular>
-          Generate from {{ effectiveCommitCount }} {{ effectiveCommitCount === 1 ? 'commit' : 'commits' }}
+          Générer à partir de {{ effectiveCommitCount }} {{ effectiveCommitCount === 1 ? 'commit' : 'commits' }}
         </button>
       </div>
     </div>
