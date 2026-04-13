@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { LucideAngularModule, Github, User, Calendar, KeyRound } from 'lucide-angular';
+import { LucideAngularModule, Github, User, Calendar, KeyRound, Info } from 'lucide-angular';
 import { CommunicationService } from '../../services/communication.service';
 import { LoadingService } from '../../services/loading.service';
 import { FormData } from '../../models/github-api.model';
@@ -31,6 +31,7 @@ export class GithubFormComponent {
   readonly UserIcon = User;
   readonly CalendarIcon = Calendar;
   readonly KeyIcon = KeyRound;
+  readonly InfoIcon = Info;
 
   async onFetchCommits(): Promise<void> {
     try {

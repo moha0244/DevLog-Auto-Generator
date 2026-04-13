@@ -9,7 +9,13 @@
   <div class="card-body">
     <div class="form-grid">
       <div class="form-group">
-        <label>Nom d'utilisateur GitHub</label>
+        <label class="required-label">
+          Nom d'utilisateur GitHub *
+          <div class="info-tooltip">
+            <lucide-angular [img]="InfoIcon" [size]="12"></lucide-angular>
+            <span class="tooltip-text">Nom d'utilisateur du propriétaire du dépôt GitHub (ex: octocat)</span>
+          </div>
+        </label>
         <div class="input-wrap">
           <lucide-angular class="input-icon" [img]="UserIcon" [size]="16"></lucide-angular>
           <input
@@ -17,27 +23,41 @@
             placeholder="janedoe"
             [(ngModel)]="form.username"
             name="username"
+            required
           />
         </div>
       </div>
 
       <div class="form-group">
-        <label>Dépôt</label>
+        <label class="required-label">
+          Dépôt *
+          <div class="info-tooltip">
+            <lucide-angular [img]="InfoIcon" [size]="12"></lucide-angular>
+            <span class="tooltip-text">Nom du dépôt GitHub sans le nom d'utilisateur (ex: hello-world)</span>
+          </div>
+        </label>
         <div class="input-wrap">
           <input
             type="text"
             placeholder="my-saas-app"
             [(ngModel)]="form.repo"
             name="repo"
+            required
           />
         </div>
       </div>
 
       <div class="form-group">
-        <label>Période</label>
+        <label class="required-label">
+          Période *
+          <div class="info-tooltip">
+            <lucide-angular [img]="InfoIcon" [size]="12"></lucide-angular>
+            <span class="tooltip-text">Période de temps pour analyser les commits (défaut: 7 jours)</span>
+          </div>
+        </label>
         <div class="input-wrap">
           <lucide-angular class="input-icon" [img]="CalendarIcon" [size]="16"></lucide-angular>
-          <select [(ngModel)]="form.range" name="range">
+          <select [(ngModel)]="form.range" name="range" required>
             <option>Dernier jour</option>
             <option>7 Derniers jours</option>
             <option>30 Derniers jours</option>
@@ -48,7 +68,13 @@
       </div>
 
       <div class="form-group">
-        <label>Auteur <span class="optional">(optionnel)</span></label>
+        <label>
+          Auteur <span class="optional">(optionnel)</span>
+          <div class="info-tooltip">
+            <lucide-angular [img]="InfoIcon" [size]="12"></lucide-angular>
+            <span class="tooltip-text">Filtrer les commits par nom d'auteur spécifique</span>
+          </div>
+        </label>
         <div class="input-wrap">
           <lucide-angular class="input-icon" [img]="UserIcon" [size]="16"></lucide-angular>
           <input
@@ -63,7 +89,13 @@
 
     <div class="bottom-row">
       <div class="token-group">
-        <label>Token d'accès personnel</label>
+        <label>
+          Token d'accès personnel
+          <div class="info-tooltip">
+            <lucide-angular [img]="InfoIcon" [size]="12"></lucide-angular>
+            <span class="tooltip-text">Token GitHub pour accéder aux dépôts privés </span>
+          </div>
+        </label>
         <div class="input-wrap">
           <lucide-angular class="input-icon" [img]="KeyIcon" [size]="16"></lucide-angular>
           <input
@@ -73,7 +105,7 @@
             name="token"
           />
         </div>
-        <small>Optionnel. Requis pour les dépôts privés. Jamais stocké.</small>
+        
       </div>
 
       <div class="actions">
